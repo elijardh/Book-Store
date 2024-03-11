@@ -9,7 +9,8 @@ namespace BookStore.Server.Services.BookServices
     {
         Task<(int, dynamic)> UploadBook(BookUploadRequest bookUploadRequest, string userID);
         Task<List<BookModel>> GetAllBooks(string? keyword);
-        Task<(int, dynamic)> PurchaseBook(int id, string reference);
+        Task<(int, dynamic)> PurchaseBook(int id, string username);
+        Task<(int, dynamic)> GetBookContent(int id, string userName);
     }
 }
 

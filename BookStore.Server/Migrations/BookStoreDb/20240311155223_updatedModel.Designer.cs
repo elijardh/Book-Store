@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using BookStore.Server.Data;
-using BookStore.Server.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -13,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookStore.Server.Migrations.BookStoreDb
 {
     [DbContext(typeof(BookStoreDbContext))]
-    partial class BookStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240311155223_updatedModel")]
+    partial class updatedModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,6 +56,9 @@ namespace BookStore.Server.Migrations.BookStoreDb
                     b.Property<DateTime>("PublicationDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("PurchasedBooksId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
@@ -63,6 +68,8 @@ namespace BookStore.Server.Migrations.BookStoreDb
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PurchasedBooksId");
 
                     b.ToTable("BookModels");
                 });
@@ -75,10 +82,6 @@ namespace BookStore.Server.Migrations.BookStoreDb
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<List<BookModel>>("Books")
-                        .IsRequired()
-                        .HasColumnType("jsonb[]");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
@@ -86,6 +89,18 @@ namespace BookStore.Server.Migrations.BookStoreDb
                     b.HasKey("Id");
 
                     b.ToTable("PurchasedBooks");
+                });
+
+            modelBuilder.Entity("BookStore.Server.Models.BookModel", b =>
+                {
+                    b.HasOne("BookStore.Server.Models.PurchasedBooks", null)
+                        .WithMany("Books")
+                        .HasForeignKey("PurchasedBooksId");
+                });
+
+            modelBuilder.Entity("BookStore.Server.Models.PurchasedBooks", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookStore.Server.Models
 {
-	public class BookModel
-	{
+    public class BookModel
+    {
 
         public int Id { get; set; }
 
@@ -34,6 +34,8 @@ namespace BookStore.Server.Models
 
         [Range(0, 10000, ErrorMessage = "Price must be between 0 and 10000.")]
         public decimal Price { get; set; }
+
+
     }
 }
 

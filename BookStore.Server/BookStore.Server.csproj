@@ -36,6 +36,7 @@
     <None Remove="Models\RequestModels\" />
     <None Remove="Books\" />
     <None Remove="Models\ResponseModels\" />
+    <None Remove="Services\PaymentServices\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -47,5 +48,6 @@
     <Folder Include="Models\RequestModels\" />
     <Folder Include="Books\" />
     <Folder Include="Models\ResponseModels\" />
+    <Folder Include="Services\PaymentServices\" />
   </ItemGroup>
 </Project>

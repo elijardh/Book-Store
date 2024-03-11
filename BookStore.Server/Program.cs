@@ -4,6 +4,7 @@ using BookStore.Server.Data;
 using BookStore.Server.Models;
 using BookStore.Server.Services.AuthServices;
 using BookStore.Server.Services.BookServices;
+using BookStore.Server.Services.PaymentServices;
 using BookStore.Server.Services.UserServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -13,11 +14,12 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IBookServices, BookServices>();
+builder.Services.AddTransient<IPaymentServices, PaymentServices>();
 
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -75,7 +77,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+} 
 
 
 app.Use(async (context, next) =>
